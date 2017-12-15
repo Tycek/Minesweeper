@@ -109,8 +109,21 @@ public class MineView extends View {
                     Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
                     v.vibrate(500);
                     gameTime = System.currentTimeMillis() - gameStartTime;
-                    System.out.println("Lost");
+                    System.out.println(gameTime);
                     new callAPI().execute();
+
+                    try {
+                        Thread.sleep(1000);
+                    }
+                    catch(InterruptedException ie) {
+
+                    }
+                    Intent intent = new Intent(getContext(), Summary.class);
+                    intent.putExtra("Name", name);
+                    intent.putExtra("Score", tileCount);
+                    intent.putExtra("Time", gameTime);
+                    intent.putExtra("Info", win);
+                    getContext().startActivity(intent);
                 }
 
                 else if(mines[i][j].flagged()) {
@@ -162,6 +175,20 @@ public class MineView extends View {
                             win = 1;
                             gameTime = System.currentTimeMillis() - gameStartTime;
                             new callAPI().execute();
+
+                            try {
+                                Thread.sleep(1000);
+                            }
+                            catch(InterruptedException ie) {
+
+                            }
+
+                            Intent intent = new Intent(getContext(), Summary.class);
+                            intent.putExtra("Name", name);
+                            intent.putExtra("Score", tileCount);
+                            intent.putExtra("Time", gameTime);
+                            intent.putExtra("Info", win);
+                            getContext().startActivity(intent);
                         }
                     }
 
